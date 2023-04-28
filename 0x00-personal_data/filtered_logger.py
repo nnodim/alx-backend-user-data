@@ -63,6 +63,7 @@ def get_logger() -> logging.Logger:
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """
+    Database connector
     """
     user = os.getenv('PERSONAL_DATA_DB_USERNAME') or "root"
     password = os.getenv('PERSONAL_DATA_DB_PASSWORD') or ""
@@ -73,3 +74,23 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
                                    host=host,
                                    database=database)
     return conn
+
+
+def main():
+    """
+    main function
+    """
+    db = get_db()
+    logger = get_logger()
+    cur = db.cur()
+    cur.execute("SELECT * FROM users;")
+    fields = cur.column_names
+    for row in cur:
+        message = "".join("{}={}; ".format(k, v) for k, v in zip(fields, row))
+        logger.info(message.strip())
+    cur.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
