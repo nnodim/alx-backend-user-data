@@ -7,10 +7,11 @@ from api.v1.views import app_views
 
 @app_views.route('/unauthorized', methods=['GET'], strict_slashes=False)
 def unauthorized():
-  '''
-  401 error
-  '''
-  abort(401, description="Unauthorized")
+    '''
+    401 error
+    '''
+    abort(401, description="Unauthorized")
+
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status() -> str:
@@ -19,6 +20,20 @@ def status() -> str:
       - the status of the API
     """
     return jsonify({"status": "OK"})
+
+
+@app_views.route('/forbidden')
+def forbidden_route():
+    """Raise a 403 error"""
+    abort(403)
+
+
+@app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
+def forbid() -> str:
+    """
+    raise a 403 error
+    """
+    abort(403, description="Forbidden")
 
 
 @app_views.route('/stats/', strict_slashes=False)
