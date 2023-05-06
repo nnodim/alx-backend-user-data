@@ -6,7 +6,6 @@ from .auth import Auth
 import uuid
 
 
-
 class SessionAuth(Auth):
     """
     A class SessionAuth that inherits from Auth
