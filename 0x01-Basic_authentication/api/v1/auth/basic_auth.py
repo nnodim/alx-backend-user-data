@@ -5,8 +5,7 @@ Basic auth
 from typing import TypeVar
 from .auth import Auth
 import base64
-
-User = TypeVar('User')
+from models.user import User
 
 
 class BasicAuth(Auth):
