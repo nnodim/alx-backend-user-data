@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Module of Users views
+Users views
 """
 import os
-from flask import request, jsonify, make_response
+from flask import request, jsonify
 from api.v1.views import app_views
 from models.user import User
 
@@ -16,10 +16,12 @@ def session_auth_login() -> str:
     email = request.form.get('email')
     password = request.form.get('password')
     if email is None or email == '':
-        return make_response(jsonify({"error": "email missing"}), 400)
+        return jsonify({"error": "email missing"}), 400
     if password is None or password == '':
-        return make_response(jsonify({"error": "password missing"}), 400)
-    users = User.search({'email': email})
+        return jsonify({"error": "password missing"}), 400
+    users = User.search({"email": email})
+    if not users or users == []:
+        return jsonify({"error": "no user found for this email"}), 404
     for user in users:
         if user.is_valid_password(password):
             from api.v1.app import auth
