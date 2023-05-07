@@ -33,7 +33,8 @@ def session_auth_login() -> str:
     return make_response(jsonify({"error": "wrong password"}), 401)
 
 
-@app_views.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
+@app_views.route(
+    '/auth_session/logout', methods=['DELETE'], strict_slashes=False)
 def session_auth_logout():
     """
     User logout
