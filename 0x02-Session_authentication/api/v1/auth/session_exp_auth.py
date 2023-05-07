@@ -51,7 +51,8 @@ class SessionExpAuth(SessionAuth):
         user_id = session.get('user_id')
         if self.session_duration <= 0:
             return user_id
-        timeout_duration = created_at + timedelta(seconds=self.session_duration)
+        timeout_duration = created_at + \
+            timedelta(seconds=self.session_duration)
         if datetime.now() > timeout_duration:
             return None
         return user_id
