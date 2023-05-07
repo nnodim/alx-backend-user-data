@@ -9,7 +9,6 @@ class UserSession(Base):
     """
     UserSession class
     """
-    __tablename__ = 'user_sessions'
 
     def __init__(self, *args: list, **kwargs: dict):
         """
