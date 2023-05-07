@@ -40,6 +40,7 @@ def before_request():
     if auth is None:
         return
     else:
+        setattr(request, "current_user", auth.current_user(request))
         excluded_paths = [
             '/api/v1/status/',
             '/api/v1/unauthorized/',
@@ -50,10 +51,9 @@ def before_request():
         cookie = auth.session_cookie(request)
         if auth.require_auth(request.path, excluded_paths):
             if auth_header is None and cookie is None:
-                abort(401)
+                abort(401, description="Unauthorized")
             if auth.current_user(request) is None:
                 abort(403, description="Forbidden")
-        request.current_user = auth.current_user(request)
 
 
 @app.errorhandler(404)
