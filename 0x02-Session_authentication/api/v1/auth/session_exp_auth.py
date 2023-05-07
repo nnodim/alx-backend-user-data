@@ -2,12 +2,12 @@
 """
 Module for SessionExpAuth
 """
-from api.v1.auth.auth import Auth
+from .session_auth import SessionAuth
 from datetime import datetime, timedelta
 import os
 
 
-class SessionExpAuth(Auth):
+class SessionExpAuth(SessionAuth):
     """
     SessionExpAuth class
     """
@@ -22,7 +22,6 @@ class SessionExpAuth(Auth):
         except Exception:
             duration = 0
         self.session_duration = duration
-
 
     def create_session(self, user_id=None):
         """
