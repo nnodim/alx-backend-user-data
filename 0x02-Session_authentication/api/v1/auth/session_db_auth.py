@@ -18,12 +18,11 @@ class SessionDBAuth(SessionExpAuth):
         session_id = super().create_session(user_id)
         if not session_id:
             return None
-        new_session = UserSession(
-                {
+        credentials = {
                     "user_id": user_id,
                     "session_id": session_id
                 }
-            )
+        new_session = UserSession(credentials)
         new_session.save()
         return session_id
 
@@ -50,5 +49,5 @@ class SessionDBAuth(SessionExpAuth):
         user_session = UserSession.search({'session_id': session_id})
         if not user_session:
             return False
-        user_session[0].remove()
+        user_session.remove()
         return True
