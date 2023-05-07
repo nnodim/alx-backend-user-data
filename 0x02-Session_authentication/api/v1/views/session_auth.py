@@ -20,6 +20,8 @@ def session_auth_login() -> str:
     if password is None or password == '':
         return make_response(jsonify({"error": "password missing"}), 400)
     users = User.search({'email': email})
+    if not users or users == []:
+        return jsonify({"error": "no user found for this email"}), 404
     for user in users:
         if user.is_valid_password(password):
             from api.v1.app import auth
@@ -28,4 +30,4 @@ def session_auth_login() -> str:
             session_name = os.getenv('SESSION_NAME')
             response.set_cookie(session_name, session_id)
             return response
-    return jsonify({"error": "wrong password"}), 401
+    return make_response(jsonify({"error": "wrong password"}), 401)
