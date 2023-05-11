@@ -18,7 +18,7 @@ def index() -> str:
 
 
 @app.route("/users", methods=["POST"])
-def users():
+def users() -> str:
     """
     users route
     """
