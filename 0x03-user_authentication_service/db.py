@@ -42,7 +42,7 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         """
         Find user
         """
@@ -50,7 +50,8 @@ class DB:
         for key, value in kwargs.items():
             if not hasattr(User, key):
                 raise InvalidRequestError
-            for user in users:
-                if getattr(user, key) == value:
-                    return user
-        raise NoResultFound
+            user = users.filter_by(**{key: value})
+        try:
+            return user.one()
+        except NoResultFound:
+            raise
