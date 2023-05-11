@@ -5,28 +5,28 @@ Flask app
 from flask import Flask, jsonify, request
 from auth import Auth
 
-app = Flask(__name__)
 AUTH = Auth()
+app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'])
 def index() -> str:
     """
-    index page
+    index route
     """
     return jsonify({"message": "Bienvenue"})
 
 
-@app.route("/users", methods=["POST"])
+@app.route('/users', methods=['POST'])
 def users() -> str:
     """
     users route
     """
-    email = request.form.get("email")
-    password = request.form.get("password")
+    email = request.form.get('email')
+    password = request.form.get('password')
     try:
         user = AUTH.register_user(email, password)
-        return jsonify({"email": user.email, "message": "user created"}), 201
+        return jsonify({"email": user.email, "message": "user created"})
     except Exception:
         return jsonify({"message": "email already registered"}), 400
 
