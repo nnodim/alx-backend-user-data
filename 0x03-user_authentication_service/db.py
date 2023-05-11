@@ -55,3 +55,16 @@ class DB:
             return user.one()
         except NoResultFound:
             raise
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        update user
+        """
+        try:
+            user = self.find_user_by(id=user_id)
+        except NoResultFound:
+            raise ValueError(f"No user found with id {user_id}")
+        for key, value in kwargs.items():
+            if key not in User.__dict__:
+                raise ValueError(f"Invalid attribute: {key}")
+            setattr(user, key, value)
+        self._session.commit()
