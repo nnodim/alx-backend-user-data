@@ -50,8 +50,7 @@ class DB:
         for key, value in kwargs.items():
             if not hasattr(User, key):
                 raise InvalidRequestError
-            query = users.filter_by(**{key: value})
-        try:
-            return query.one()
-        except NoResultFound:
-            raise
+            for user in users:
+                if getattr(user, key) == value:
+                    return user
+        raise NoResultFound
