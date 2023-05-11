@@ -2,6 +2,7 @@
 """
 Auth file
 """
+import uuid
 import bcrypt
 from db import DB
 from user import User
@@ -15,6 +16,14 @@ def _hash_password(password: str) -> bytes:
     """
     salt = bcrypt.gensalt()
     return bcrypt.hashpw(password.encode('utf-8'), salt)
+
+
+def _generate_uuid() -> str:
+    """
+    Generate a new UUID
+    """
+    id = str(uuid.uuid4())
+    return id
 
 
 class Auth:
