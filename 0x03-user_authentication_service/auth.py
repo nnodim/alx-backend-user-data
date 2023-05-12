@@ -6,6 +6,7 @@ import uuid
 import bcrypt
 from db import DB
 from user import User
+from typing import Optional
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import IntegrityError
 
@@ -68,3 +69,15 @@ class Auth:
             session_id = _generate_uuid()
             user.session_id = session_id
             return session_id
+
+    def get_user_from_session_id(self, session_id: str) -> Optional[User]:
+        """
+        get user from session id
+        """
+        if not session_id:
+            return None
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+            return user
+        except NoResultFound:
+            return None
