@@ -93,6 +93,7 @@ class Auth:
         else:
             user.session_id = None
             return None
+
     def get_reset_password_token(self, email: str) -> str:
         """
         Generates a reset password token
