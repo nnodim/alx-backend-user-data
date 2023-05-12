@@ -92,4 +92,3 @@ class Auth:
             return None
         else:
             user.session_id = None
-            return None
