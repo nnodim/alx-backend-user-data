@@ -89,7 +89,10 @@ def get_reset_password_token() -> str:
         reset_token = AUTH.get_reset_password_token(email)
     except ValueError:
         abort(403)
-    return jsonify({"email": f"{email}", "reset_token": f"{reset_token}"})
+    return jsonify({
+        "email": f"{email}",
+        "reset_token": f"{reset_token}"
+    })
 
 
 if __name__ == "__main__":
